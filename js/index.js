@@ -1,14 +1,14 @@
-import { Canvas, Cell } from "./constants.js"
 import Game from "./core/game.js"
+import Canvas from "./core/canvas.js"
 import { animate } from "./utils.js"
+import Mouse from "./core/mouse.js"
 
-const canvas = document.createElement('canvas')
-canvas.width = Canvas.WIDTH
-canvas.height = Canvas.HEIGHT
-document.body.appendChild(canvas)
+const canvas = new Canvas()
+const mouse = new Mouse(canvas)
 
-const ctx = canvas.getContext('2d')
-const game = new Game(ctx)
+const ctx = canvas.getContext()
+const game = new Game(ctx, mouse)
+
 
 animate(game)
 //constants

@@ -1,8 +1,9 @@
-import Board from "./board.js"
+import Board from "../components/board.js"
 export default class Game {
-    constructor(ctx) {
+    constructor(ctx, mouse) {
         this.ctx = ctx
-        this.board = new Board(ctx)
+        this.mouse = mouse
+        this.board = new Board(this)
         this.projectiles = []
         this.defenders = []
         this.enemies = []

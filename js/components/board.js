@@ -1,9 +1,9 @@
 import { Canvas, Cell as CellEnum, ControlBar } from "../constants.js"
-import Cell from "../components/cell.js"
+import Cell from "./cell.js"
 
 export default class Board { 
-    constructor(ctx) {
-        this.ctx = ctx
+    constructor(game) {
+        this.game = game
         this.controlBar = {
             height: ControlBar.HEIGHT,
             width: ControlBar.WIDTH,
@@ -27,13 +27,12 @@ export default class Board {
     draw() {
         this.drawControlBar()
         this.board.forEach((cell) => {
-            cell.draw(this.ctx)
-            console.log(cell);
+            cell.draw(this.game.ctx)
         })
     }
 
     drawControlBar() {
-        this.ctx.fillStyle = this.controlBar.color
-        this.ctx.fillRect(0, 0, this.controlBar.width, this.controlBar.height)
+        this.game.ctx.fillStyle = this.controlBar.color
+        this.game.ctx.fillRect(0, 0, this.controlBar.width, this.controlBar.height)
     }
 }
