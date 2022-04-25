@@ -1,31 +1,34 @@
-import { Cell, Canvas, ControlBar } from "./constants.js"
+import { Canvas, Cell as CellEnum, ControlBar } from "./constants.js"
+import Cell from "../components/cell.js"
 
 export default class Board { 
     constructor(ctx) {
         this.ctx = ctx
-        this.cell = {
-            size: Cell.SIZE,
-            gap: Cell.GAP,
-            color: Cell.COLOR,
-        }
         this.controlBar = {
             height: ControlBar.HEIGHT,
             width: ControlBar.WIDTH,
             color: ControlBar.COLOR,
         }
         this.board = []
+        this.createGrid()
 
+    }
+
+    createGrid() {
+        for (let y = CellEnum.SIZE; y < Canvas.HEIGHT; y += CellEnum.SIZE) {
+            for (let x = 0; x < Canvas.WIDTH; x += CellEnum.SIZE) {
+                this.board.push(new Cell(x, y))
+            }
+        }
     }
 
     update(delta) {}
 
     draw() {
         this.drawControlBar()
-        this.board.forEach(row => {
-            row.forEach(cell => {
-                this.ctx.strokeStyle = cell.color
-                this.ctx.strokeRect(cell.x, cell.y, this.cell.size, this.cell.size)
-            })
+        this.board.forEach((cell) => {
+            cell.draw(this.ctx)
+            console.log(cell);
         })
     }
 
