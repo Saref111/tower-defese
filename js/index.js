@@ -5,9 +5,8 @@ import Mouse from "./core/mouse.js"
 
 const canvas = new Canvas()
 const mouse = new Mouse(canvas)
+const game = new Game(canvas, mouse)
 
-const ctx = canvas.getContext()
-const game = new Game(ctx, mouse)
 
 
 animate(game)
