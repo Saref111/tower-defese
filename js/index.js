@@ -1,4 +1,4 @@
-import { Canvas, Cell } from "./core/constants.js"
+import { Canvas, Cell } from "./constants.js"
 import Game from "./core/game.js"
 import { animate } from "./utils.js"
 

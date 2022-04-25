@@ -1,4 +1,4 @@
-import { Canvas, Cell as CellEnum, ControlBar } from "./constants.js"
+import { Canvas, Cell as CellEnum, ControlBar } from "../constants.js"
 import Cell from "../components/cell.js"
 
 export default class Board { 

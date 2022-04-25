@@ -1,4 +1,4 @@
-import { Cell as CellEnum } from '../core/constants.js'
+import { Cell as CellEnum } from '../constants.js'
 
 export default class Cell {
     constructor(x, y) {
