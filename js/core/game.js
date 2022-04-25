@@ -2,6 +2,7 @@ import Canvas from "./canvas.js"
 import Mouse from "./mouse.js"
 import Board from "../components/board.js"
 import Defender from "../components/defender.js"
+import Enemy from "../components/enemy.js"
 import { START_MONEY, Defender as DefenderEnum } from "../constants.js"
 export default class Game {
     constructor() {
@@ -14,6 +15,7 @@ export default class Game {
         this.enemies = []
         this.resources = []
         this.money = START_MONEY
+        this.frameCount = 0
         // this.gameState = new GameState()
         // this.utilities = new Utilities()
 
@@ -29,7 +31,19 @@ export default class Game {
         }
     }
 
-    update(delta) {}
+    addEnemy() {
+        const {y} = this.board.getRandomCell()
+        this.enemies.push(new Enemy(y))
+    }
+
+    update(delta) {
+        this.frameCount += 1
+        this.enemies.forEach(enemy => enemy.update(delta))
+
+        if (this.frameCount % 300 === 0) {
+            this.addEnemy()
+        }
+    }
 
     draw(delta) {
         this.clear()
@@ -37,7 +51,7 @@ export default class Game {
         this.board.draw()
         // this.projectiles.forEach(projectile => projectile.draw())
         this.defenders.forEach((defender) => defender.draw(this.ctx))
-        // this.enemies.forEach(enemy => enemy.draw())
+        this.enemies.forEach(enemy => enemy.draw(this.ctx))
         // this.resources.forEach(resource => resource.draw())
     }
     

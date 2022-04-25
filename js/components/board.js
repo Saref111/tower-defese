@@ -1,4 +1,5 @@
 import { Canvas, Cell as CellEnum, ControlBar } from "../constants.js"
+import { getRandomNumber } from "../utils.js"
 import Cell from "./cell.js"
 
 export default class Board { 
@@ -9,15 +10,19 @@ export default class Board {
             width: ControlBar.WIDTH,
             color: ControlBar.COLOR,
         }
-        this.board = []
+        this.cells = []
         this.createGrid()
 
+    }
+
+    getRandomCell() {
+        return this.cells[getRandomNumber(0, this.cells.length - 1)]
     }
 
     createGrid() {
         for (let y = CellEnum.SIZE; y < Canvas.HEIGHT; y += CellEnum.SIZE) {
             for (let x = 0; x < Canvas.WIDTH; x += CellEnum.SIZE) {
-                this.board.push(new Cell(x, y))
+                this.cells.push(new Cell(x, y))
             }
         }
     }
@@ -28,7 +33,7 @@ export default class Board {
         const { mouse } = this.game
 
         this.drawControlBar()
-        this.board.forEach((cell) => {
+        this.cells.forEach((cell) => {
             if (cell.contains(mouse)) {
                 cell.draw(this.game.ctx)
             }

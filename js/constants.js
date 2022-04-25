@@ -28,3 +28,12 @@ export const Defender = {
     TEXT_LINE_HEIGHT: 20,
     COST: 100,
 }
+
+export const Enemy = {
+    MIN_SPEED: 0.2,
+    MAX_SPEED: 0.6,
+    HEALTH: 100,
+    COLOR: 'red',
+    TEXT_COLOR: 'brown',
+    TEXT_LINE_HEIGHT: 20,
+}
