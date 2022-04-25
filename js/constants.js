@@ -1,4 +1,5 @@
 export const FPS = 60
+export const START_MONEY = 300
 
 export const Canvas = {
     WIDTH: 900,
@@ -23,4 +24,5 @@ export const Defender = {
     COLOR: 'blue',
     TEXT_COLOR: 'gold',
     TEXT_LINE_HEIGHT: 20,
+    COST: 100,
 }

@@ -2,7 +2,7 @@ import Canvas from "./canvas.js"
 import Mouse from "./mouse.js"
 import Board from "../components/board.js"
 import Defender from "../components/defender.js"
-
+import { START_MONEY, Defender as DefenderEnum } from "../constants.js"
 export default class Game {
     constructor() {
         this.canvas = new Canvas()
@@ -13,13 +13,17 @@ export default class Game {
         this.defenders = []
         this.enemies = []
         this.resources = []
+        this.money = START_MONEY
         // this.gameState = new GameState()
         // this.utilities = new Utilities()
 
     }
 
     addDefender(cell) { 
-        this.defenders.push(new Defender(cell.x, cell.y))
+        if (this.money >= DefenderEnum.COST) {
+            this.defenders.push(new Defender(cell.x, cell.y))
+            this.money -= DefenderEnum.COST
+        }
     }
 
     update(delta) {}
