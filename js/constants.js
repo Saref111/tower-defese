@@ -16,6 +16,8 @@ export const ControlBar = {
     HEIGHT: Cell.SIZE,
     WIDTH: Canvas.WIDTH,
     COLOR: '#0095DD',
+    TEXT_COLOR: '#FFFFFF',
+    TEXT_LINE_HEIGHT: 20,
 }
 
 export const Defender = {

@@ -38,5 +38,10 @@ export default class Board {
     drawControlBar() {
         this.game.ctx.fillStyle = this.controlBar.color
         this.game.ctx.fillRect(0, 0, this.controlBar.width, this.controlBar.height)
+
+        this.game.ctx.fillStyle = ControlBar.TEXT_COLOR
+        this.game.ctx.font = ControlBar.TEXT_LINE_HEIGHT + "px Arial"
+        this.game.ctx.fillText(' Money: ' + Math.floor(this.game.money), 0, ControlBar.TEXT_LINE_HEIGHT)
+
     }
 }

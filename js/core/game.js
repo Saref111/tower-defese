@@ -20,7 +20,10 @@ export default class Game {
     }
 
     addDefender(cell) { 
-        if (this.money >= DefenderEnum.COST) {
+        if (
+            this.money >= DefenderEnum.COST && 
+            !this.defenders.some(({x, y}) => x === cell.x && y === cell.y)
+        ) {
             this.defenders.push(new Defender(cell.x, cell.y))
             this.money -= DefenderEnum.COST
         }
