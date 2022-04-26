@@ -12,9 +12,13 @@ export default class Defender {
     }
 
     update(delta, projectiles) {
-        this.timer += 1
-        if (this.timer % DefenderEnum.SHOOTING_DELAY === 0) {
-            projectiles.push(new Projectile(this.x, this.y))
+        if (this.shooting) {
+            this.timer += 1
+            if (this.timer % DefenderEnum.SHOOTING_DELAY === 0) {
+                projectiles.push(new Projectile(this.x, this.y))
+            }
+        } else {
+            this.timer = 0
         }
     }
 

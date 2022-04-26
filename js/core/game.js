@@ -20,6 +20,7 @@ export default class Game {
         this.projectiles = []
         this.defenders = []
         this.enemies = []
+        this.enemiesPositions = []
         this.resources = []
         this.money = START_MONEY
         this.frameCount = 0
@@ -53,6 +54,7 @@ export default class Game {
     addEnemy() {
         const {y} = this.board.getRandomCell()
         this.enemies.push(new Enemy(y))
+        this.enemiesPositions.push(y)
     }
 
     update(delta) {
@@ -60,14 +62,16 @@ export default class Game {
 
         this.handleEnemies(delta)
         this.handleDefenders(delta)
+        this.handleProjectile(delta)    
         this.handleCollisions()
-        this.handleProjectile()
     }
     
     handleEnemies(delta) {
         this.enemies.forEach((enemy, i) => {
             if (enemy.health < 0) {
                 this.enemies.splice(i, 1)
+                this.enemiesPositions.splice(this.enemiesPositions.indexOf(enemy.y), 1)
+                this.money += enemy.maxHealth / 2
             } else {
                 enemy.update(delta)
                 if (enemy.x <= 0) {
@@ -85,6 +89,15 @@ export default class Game {
     }
 
     handleCollisions() {
+        this.projectiles.forEach((projectile, i) => {
+            this.enemies.forEach((enemy, j) => {
+                if (this.checkCollision(projectile, enemy)) {
+                    enemy.health -= projectile.damage
+                    this.projectiles.splice(i, 1)
+                }
+            })
+        })
+
         this.defenders.forEach((defender) => {
             this.enemies.forEach((enemy) => {
                 if (this.checkCollision(enemy, defender)) {
@@ -105,6 +118,13 @@ export default class Game {
             if (defender.health < 0) {
                 this.defenders.splice(i, 1)
             } else {
+                let isEnemyOnLine = false
+                this.enemiesPositions.forEach((enemyPosition) => {
+                    if (enemyPosition === defender.y) {
+                        isEnemyOnLine = true
+                    }
+                })
+                defender.shooting = isEnemyOnLine
                 defender.update(delta, this.projectiles)
             }
         })

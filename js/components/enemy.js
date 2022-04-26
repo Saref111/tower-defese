@@ -10,7 +10,7 @@ export default class Enemy {
         this.speed = getRandomNumber(EnemyEnum.MIN_SPEED, EnemyEnum.MAX_SPEED)
         this.movement = this.speed
         this.health = EnemyEnum.HEALTH
-        this.maxHealth = EnemyEnum.HEALTH
+        this.maxHealth = this.health
     }
 
     update(delta) {
