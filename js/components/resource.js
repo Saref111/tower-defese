@@ -8,12 +8,13 @@ export default class Resource {
         this.width = Cell.SIZE * ResourceEnum.MULTIPLIER
         this.height = Cell.SIZE * ResourceEnum.MULTIPLIER
         this.value = ResourceEnum.VALUE
+        this.color = ResourceEnum.COLOR
     }
 
     update(delta) {}
 
     draw(ctx) {
-        ctx.fillStyle = ResourceEnum.COLOR
+        ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
         
         ctx.fillStyle = ResourceEnum.TEXT_COLOR

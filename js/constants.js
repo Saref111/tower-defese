@@ -1,5 +1,5 @@
 export const FPS = 60
-export const START_MONEY = 3000
+export const START_MONEY = 300
 
 export const Canvas = {
     WIDTH: 900,
@@ -59,5 +59,5 @@ export const Resource = {
     MULTIPLIER: 0.5,
     VALUE: 50,
     INTERVAL: 500,
-    TEXT_COLOR: '#FFFFFF',
+    TEXT_COLOR: 'gold',
 } 

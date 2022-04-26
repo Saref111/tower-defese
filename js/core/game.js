@@ -12,6 +12,7 @@ import {
     Resource as ResourceEnum,
 } from "../constants.js"
 import Resource from "../components/resource.js"
+import FloatingMessage from "../components/floating-message.js"
 
 export default class Game {
     constructor() {
@@ -23,7 +24,8 @@ export default class Game {
         this.defenders = []
         this.enemies = []
         this.enemiesPositions = []
-        this.resources = [new Resource()]
+        this.resources = []
+        this.floatingMessages = []
         this.money = START_MONEY
         this.scores = 0
         this.frameCount = 0
@@ -31,9 +33,19 @@ export default class Game {
         this.isOver = false
     }
 
+    addMessage(resource) {
+        this.floatingMessages.push(new FloatingMessage({
+            text: `+${resource.value}`,
+            x: resource.x,
+            y: resource.y,
+            color: resource.color,
+        }))
+    }
+
     removeResource(resource) {
         this.money += resource.value
         this.resources.splice(this.resources.indexOf(resource), 1)
+        this.addMessage(resource)
     }
 
     checkCollision(object1, object2) {
@@ -70,8 +82,18 @@ export default class Game {
         this.handleProjectile(delta)    
         this.handleCollisions()
         this.handleResources()
+        this.handleFloatingMessages(delta)
     }
     
+    handleFloatingMessages(delta) {
+        this.floatingMessages.forEach((message, i) => {
+            message.update(delta)
+            if (message.isOver) {
+                this.floatingMessages.splice(i, 1)
+            }
+        })
+    }
+
     handleEnemies(delta) {
         this.enemies.forEach((enemy, i) => {
             if (enemy.health < 0) {
@@ -160,9 +182,10 @@ export default class Game {
         this.projectiles.forEach((projectile) => projectile.draw(this.ctx))
         this.defenders.forEach((defender) => defender.draw(this.ctx))
         this.enemies.forEach((enemy) => enemy.draw(this.ctx))
-        this.resources.forEach(resource => resource.draw(this.ctx))
-
+        this.resources.forEach((resource) => resource.draw(this.ctx))
+        
         this.board.drawControlBar(this.ctx)
+        this.floatingMessages.forEach((message) => message.draw(this.ctx))
     }
     
     clear() {
