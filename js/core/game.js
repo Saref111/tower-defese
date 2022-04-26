@@ -57,21 +57,20 @@ export default class Game {
         this.frameCount += 1
 
         this.handleEnemies(delta)
+        this.handleDefenders(delta)
+        this.handleCollisions()
     }
     
     handleEnemies(delta) {
         this.enemies.forEach((enemy) => {
-            enemy.update(delta)
-
-            if (enemy.x <= 0) {
-                this.isOver = true
-            }
-
-            this.defenders.forEach((defender) => {
-                if (this.checkCollision(enemy, defender)) {
-                    enemy.movement = 0
+            if (enemy.health < 0) {
+                this.enemies.splice(this.enemies.indexOf(enemy), 1)
+            } else {
+                enemy.update(delta)
+                if (enemy.x <= 0) {
+                    this.isOver = true
                 }
-            })
+            }
         })
     
         if (this.frameCount % this.enemyInterval === 0) {
@@ -82,12 +81,41 @@ export default class Game {
         }
     }
 
+    handleCollisions() {
+        this.defenders.forEach((defender) => {
+            this.enemies.forEach((enemy) => {
+                if (this.checkCollision(enemy, defender)) {
+                    enemy.movement = 0
+                    defender.health -= EnemyEnum.DAMAGE
+                    enemy.health -= DefenderEnum.DAMAGE
+                    
+                    if (defender.health < 1) {
+                        enemy.movement = enemy.speed
+                    }
+                }
+            })
+        })
+    }
+
+    handleDefenders(delta) {
+        this.defenders.forEach((defender) => {
+            if (defender.health < 0) {
+                this.defenders.splice(this.defenders.indexOf(defender), 1)
+            } else {
+                defender.update(delta)
+            }
+        })
+    }
+
     draw(delta) {
         this.clear()
 
         // this.projectiles.forEach(projectile => projectile.draw())
         this.defenders.forEach((defender) => defender.draw(this.ctx))
-        this.enemies.forEach(enemy => enemy.draw(this.ctx))
+        this.enemies.forEach((enemy) => {
+            enemy.draw(this.ctx)
+            
+        })
         // this.resources.forEach(resource => resource.draw())
         this.board.draw()
     }

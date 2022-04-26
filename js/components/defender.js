@@ -11,6 +11,10 @@ export default class Defender {
         this.timer = 0
     }
 
+    update(delta) {
+
+    }
+
     draw(ctx) {
         ctx.fillStyle = DefenderEnum.COLOR
         ctx.fillRect(this.x, this.y, this.width, this.height)
