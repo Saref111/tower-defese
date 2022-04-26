@@ -61,6 +61,7 @@ export default class Game {
         this.handleEnemies(delta)
         this.handleDefenders(delta)
         this.handleCollisions()
+        this.handleProjectile()
     }
     
     handleEnemies(delta) {
@@ -104,17 +105,17 @@ export default class Game {
             if (defender.health < 0) {
                 this.defenders.splice(i, 1)
             } else {
-                defender.update(delta)
+                defender.update(delta, this.projectiles)
             }
         })
     }
 
-    handleProjectile() {
+    handleProjectile(delta) {
         this.projectiles.forEach((projectile, i) => {
             if (projectile.x > CanvasEnum.WIDTH - CellEnum.SIZE) {
                 this.projectiles.splice(i, 1)
             } else {
-                projectile.update()
+                projectile.update(delta)
             }
         })
     }

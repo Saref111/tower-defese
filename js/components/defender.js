@@ -1,4 +1,5 @@
 import { Cell, Defender as DefenderEnum } from "../constants.js"
+import Projectile from "./projectile.js"
 export default class Defender {
     constructor(x, y) {
         this.x = x
@@ -10,8 +11,11 @@ export default class Defender {
         this.timer = 0
     }
 
-    update(delta) {
-
+    update(delta, projectiles) {
+        this.timer += 1
+        if (this.timer % DefenderEnum.SHOOTING_DELAY === 0) {
+            projectiles.push(new Projectile(this.x, this.y))
+        }
     }
 
     draw(ctx) {
