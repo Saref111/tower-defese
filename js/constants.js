@@ -55,9 +55,9 @@ export const Projectile = {
 }
 
 export const Resource = {
-    COLOR: 'green',
+    COLOR: 'purple',
     MULTIPLIER: 0.5,
     VALUE: 50,
     INTERVAL: 500,
-    TEXT_COLOR: 'gold',
+    TEXT_COLOR: 'white',
 } 

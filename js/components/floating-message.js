@@ -19,10 +19,11 @@ export default class FloatingMessage {
     }
 
     draw(ctx) {
+        const textWidth = ctx.measureText(this.text).width
         ctx.fillStyle = this.color
         ctx.globalAlpha = this.alpha
-        ctx.font = "20px Arial"
-        ctx.fillText(this.text, this.x, this.y)
+        ctx.font = "30px Arial"
+        ctx.fillText(this.text, this.x - textWidth / 2, this.y)
         ctx.globalAlpha = 1
     }
 }

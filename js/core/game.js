@@ -33,12 +33,12 @@ export default class Game {
         this.isOver = false
     }
 
-    addMessage(resource) {
+    addMessage(source) {
         this.floatingMessages.push(new FloatingMessage({
-            text: `+${resource.value}`,
-            x: resource.x,
-            y: resource.y,
-            color: resource.color,
+            text: source.value,
+            x: source.x,
+            y: source.y,
+            color: source.color,
         }))
     }
 
@@ -58,14 +58,36 @@ export default class Game {
     }
 
     addDefender(cell) { 
+        const isEmpty = !this.defenders.some(({x, y}) => x === cell.x && y === cell.y)
         if (
             cell &&
-            this.money >= DefenderEnum.COST && 
-            !this.defenders.some(({x, y}) => x === cell.x && y === cell.y)
+            isEmpty &&
+            this.money >= DefenderEnum.COST  
         ) {
             this.defenders.push(new Defender(cell.x, cell.y))
             this.money -= DefenderEnum.COST
+        } else if (!isEmpty) {
+            this.addMessage({
+                value: `This cell is already occupied`,
+                x: this.mouse.x,
+                y: this.mouse.y,
+                color: 'red',
+            })
+        } else{
+            this.addMessage({
+                value: `Not enough money`,
+                x: this.mouse.x,
+                y: this.mouse.y,
+                color: 'red',
+            })
         }
+    }
+
+    removeEnemy(i) {
+        this.enemiesPositions.splice(this.enemiesPositions.indexOf(this.enemies[i].y), 1)
+        this.scores += this.enemies[i].maxHealth / 2
+        this.addMessage(this.enemies[i])
+        this.enemies.splice(i, 1)
     }
 
     addEnemy() {
@@ -97,9 +119,7 @@ export default class Game {
     handleEnemies(delta) {
         this.enemies.forEach((enemy, i) => {
             if (enemy.health < 0) {
-                this.enemies.splice(i, 1)
-                this.enemiesPositions.splice(this.enemiesPositions.indexOf(enemy.y), 1)
-                this.scores += enemy.maxHealth / 2
+                this.removeEnemy(i)
             } else {
                 enemy.update(delta)
                 if (enemy.x <= 0) {
@@ -117,17 +137,15 @@ export default class Game {
     }
 
     handleCollisions() {
-        this.projectiles.forEach((projectile, i) => {
-            this.enemies.forEach((enemy, j) => {
+        this.enemies.forEach((enemy, j) => {
+            this.projectiles.forEach((projectile, j) => {
                 if (this.checkCollision(projectile, enemy)) {
                     enemy.health -= projectile.damage
-                    this.projectiles.splice(i, 1)
+                    this.projectiles.splice(j, 1)
                 }
             })
-        })
 
-        this.defenders.forEach((defender) => {
-            this.enemies.forEach((enemy) => {
+            this.defenders.forEach((defender) => {
                 if (this.checkCollision(enemy, defender)) {
                     enemy.movement = 0
                     defender.health -= EnemyEnum.DAMAGE

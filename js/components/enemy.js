@@ -11,6 +11,8 @@ export default class Enemy {
         this.movement = this.speed
         this.health = EnemyEnum.HEALTH
         this.maxHealth = this.health
+        this.color = EnemyEnum.COLOR
+        this.value = this.maxHealth / 2
     }
 
     update(delta) {
@@ -18,7 +20,7 @@ export default class Enemy {
     }
 
     draw(ctx) {
-        ctx.fillStyle = EnemyEnum.COLOR
+        ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
 
         ctx.fillStyle = EnemyEnum.TEXT_COLOR
