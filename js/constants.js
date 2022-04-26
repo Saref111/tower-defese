@@ -18,8 +18,8 @@ export const ControlBar = {
     COLOR: '#0095DD',
     TEXT_COLOR: '#FFFFFF',
     TEXT_LINE_HEIGHT: 20,
-    WARN_TEXT_COLOR: '#FF0000',
-    WARN_TEXT_SIZE: '50px',
+    WARN_TEXT_COLOR: '#000000',
+    WARN_TEXT_SIZE: '90px',
     WARN_TEXT_FONT: 'Arial',
 }
 

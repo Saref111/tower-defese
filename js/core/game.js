@@ -8,6 +8,7 @@ import {
     Defender as DefenderEnum, 
     Enemy as EnemyEnum,
 } from "../constants.js"
+
 export default class Game {
     constructor() {
         this.canvas = new Canvas()
@@ -25,6 +26,15 @@ export default class Game {
         // this.gameState = new GameState()
         // this.utilities = new Utilities()
 
+    }
+
+    checkCollision(object1, object2) {
+        return (
+            object1.x < object2.x + object2.width &&
+            object1.x + object1.width > object2.x &&
+            object1.y < object2.y + object2.height &&
+            object1.y + object1.height > object2.y
+        )
     }
 
     addDefender(cell) { 
@@ -50,7 +60,19 @@ export default class Game {
     }
     
     handleEnemies(delta) {
-        this.enemies.forEach(enemy => enemy.update(delta))
+        this.enemies.forEach((enemy) => {
+            enemy.update(delta)
+
+            if (enemy.x <= 0) {
+                this.isOver = true
+            }
+
+            this.defenders.forEach((defender) => {
+                if (this.checkCollision(enemy, defender)) {
+                    enemy.movement = 0
+                }
+            })
+        })
     
         if (this.frameCount % this.enemyInterval === 0) {
             this.addEnemy()
@@ -58,20 +80,16 @@ export default class Game {
                 this.enemyInterval -= EnemyEnum.INTERVAL_DECREMENT
             }
         }
-
-        if (this.enemies.some((it) => it.x <= 0)) {
-            this.isOver = true
-        }
     }
 
     draw(delta) {
         this.clear()
 
-        this.board.draw()
         // this.projectiles.forEach(projectile => projectile.draw())
         this.defenders.forEach((defender) => defender.draw(this.ctx))
         this.enemies.forEach(enemy => enemy.draw(this.ctx))
         // this.resources.forEach(resource => resource.draw())
+        this.board.draw()
     }
     
     clear() {
