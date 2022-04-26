@@ -18,6 +18,9 @@ export const ControlBar = {
     COLOR: '#0095DD',
     TEXT_COLOR: '#FFFFFF',
     TEXT_LINE_HEIGHT: 20,
+    WARN_TEXT_COLOR: '#FF0000',
+    WARN_TEXT_SIZE: '50px',
+    WARN_TEXT_FONT: 'Arial',
 }
 
 export const Defender = {
@@ -36,4 +39,7 @@ export const Enemy = {
     COLOR: 'red',
     TEXT_COLOR: 'brown',
     TEXT_LINE_HEIGHT: 20,
+    INTERVAL: 600,
+    MIN_INTERVAL: 120,
+    INTERVAL_DECREMENT: 100,
 }

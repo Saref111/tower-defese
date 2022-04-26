@@ -3,7 +3,11 @@ import Mouse from "./mouse.js"
 import Board from "../components/board.js"
 import Defender from "../components/defender.js"
 import Enemy from "../components/enemy.js"
-import { START_MONEY, Defender as DefenderEnum } from "../constants.js"
+import { 
+    START_MONEY,
+    Defender as DefenderEnum, 
+    Enemy as EnemyEnum,
+} from "../constants.js"
 export default class Game {
     constructor() {
         this.canvas = new Canvas()
@@ -16,6 +20,8 @@ export default class Game {
         this.resources = []
         this.money = START_MONEY
         this.frameCount = 0
+        this.enemyInterval = EnemyEnum.INTERVAL
+        this.isOver = false
         // this.gameState = new GameState()
         // this.utilities = new Utilities()
 
@@ -23,6 +29,7 @@ export default class Game {
 
     addDefender(cell) { 
         if (
+            cell &&
             this.money >= DefenderEnum.COST && 
             !this.defenders.some(({x, y}) => x === cell.x && y === cell.y)
         ) {
@@ -38,10 +45,22 @@ export default class Game {
 
     update(delta) {
         this.frameCount += 1
-        this.enemies.forEach(enemy => enemy.update(delta))
 
-        if (this.frameCount % 300 === 0) {
+        this.handleEnemies(delta)
+    }
+    
+    handleEnemies(delta) {
+        this.enemies.forEach(enemy => enemy.update(delta))
+    
+        if (this.frameCount % this.enemyInterval === 0) {
             this.addEnemy()
+            if (this.enemyInterval > EnemyEnum.MIN_INTERVAL) {
+                this.enemyInterval -= EnemyEnum.INTERVAL_DECREMENT
+            }
+        }
+
+        if (this.enemies.some((it) => it.x <= 0)) {
+            this.isOver = true
         }
     }
 

@@ -48,5 +48,10 @@ export default class Board {
         this.game.ctx.font = ControlBar.TEXT_LINE_HEIGHT + "px Arial"
         this.game.ctx.fillText(' Money: ' + Math.floor(this.game.money), 0, ControlBar.TEXT_LINE_HEIGHT)
 
+        if (this.game.isOver) {
+            this.game.ctx.font = ControlBar.WARN_TEXT_SIZE + " " + ControlBar.WARN_TEXT_FONT
+            this.game.ctx.fillStyle = ControlBar.WARN_TEXT_COLOR
+            this.game.ctx.fillText('Game Over', this.game.canvas.width / 2.5, 300)
+        }
     }
 }

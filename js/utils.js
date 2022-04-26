@@ -4,7 +4,9 @@ export const animate = function (game, time = 0) {
     lastTime = time
     game.update(delta)
     game.draw(delta)
-    requestAnimationFrame((time) => animate(game, time))
+    if (!game.isOver) {
+        requestAnimationFrame((time) => animate(game, time))
+    }
 }
 
 export const getRandomNumber = function (min, max) { 
