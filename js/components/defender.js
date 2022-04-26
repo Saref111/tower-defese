@@ -1,4 +1,5 @@
 import { Cell, Defender as DefenderEnum } from "../constants.js"
+import { getRandomNumber } from "../utils.js"
 import Projectile from "./projectile.js"
 export default class Defender {
     constructor(x, y) {
@@ -8,13 +9,14 @@ export default class Defender {
         this.height = Cell.SIZE
         this.shooting = false
         this.health = DefenderEnum.HEALTH
+        this.shootingDelay = DefenderEnum.SHOOTING_DELAY
         this.timer = 0
     }
 
     update(delta, projectiles) {
         if (this.shooting) {
             this.timer += 1
-            if (this.timer % DefenderEnum.SHOOTING_DELAY === 0) {
+            if (this.timer % this.shootingDelay === 0) {
                 projectiles.push(new Projectile(this.x, this.y))
             }
         } else {

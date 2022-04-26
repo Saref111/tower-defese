@@ -9,7 +9,9 @@ import {
     Enemy as EnemyEnum,
     Canvas as CanvasEnum,
     Cell as CellEnum,
+    Resource as ResourceEnum,
 } from "../constants.js"
+import Resource from "../components/resource.js"
 
 export default class Game {
     constructor() {
@@ -21,14 +23,17 @@ export default class Game {
         this.defenders = []
         this.enemies = []
         this.enemiesPositions = []
-        this.resources = []
+        this.resources = [new Resource()]
         this.money = START_MONEY
+        this.scores = 0
         this.frameCount = 0
         this.enemyInterval = EnemyEnum.INTERVAL
         this.isOver = false
-        // this.gameState = new GameState()
-        // this.utilities = new Utilities()
+    }
 
+    removeResource(resource) {
+        this.money += resource.value
+        this.resources.splice(this.resources.indexOf(resource), 1)
     }
 
     checkCollision(object1, object2) {
@@ -64,6 +69,7 @@ export default class Game {
         this.handleDefenders(delta)
         this.handleProjectile(delta)    
         this.handleCollisions()
+        this.handleResources()
     }
     
     handleEnemies(delta) {
@@ -71,7 +77,7 @@ export default class Game {
             if (enemy.health < 0) {
                 this.enemies.splice(i, 1)
                 this.enemiesPositions.splice(this.enemiesPositions.indexOf(enemy.y), 1)
-                this.money += enemy.maxHealth / 2
+                this.scores += enemy.maxHealth / 2
             } else {
                 enemy.update(delta)
                 if (enemy.x <= 0) {
@@ -140,18 +146,23 @@ export default class Game {
         })
     }
 
+    handleResources() {
+        if (this.frameCount % ResourceEnum.INTERVAL === 0) {
+            this.resources.push(new Resource())
+        }
+    }
+
     draw(delta) {
         this.clear()
         
         this.board.draw()
+
         this.projectiles.forEach((projectile) => projectile.draw(this.ctx))
         this.defenders.forEach((defender) => defender.draw(this.ctx))
-        this.enemies.forEach((enemy) => {
-            enemy.draw(this.ctx)
-        })
+        this.enemies.forEach((enemy) => enemy.draw(this.ctx))
+        this.resources.forEach(resource => resource.draw(this.ctx))
 
         this.board.drawControlBar(this.ctx)
-        // this.resources.forEach(resource => resource.draw())
     }
     
     clear() {

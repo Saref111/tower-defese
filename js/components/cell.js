@@ -12,9 +12,4 @@ export default class Cell {
         ctx.strokeStyle = CellEnum.COLOR
         ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
-
-    contains(mouse) {
-        return mouse.x > this.x && mouse.x < this.x + this.width && 
-            mouse.y > this.y && mouse.y < this.y + this.height
-    }
 }

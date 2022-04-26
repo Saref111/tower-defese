@@ -53,3 +53,11 @@ export const Projectile = {
     SPEED: 5,
     DAMAGE: 20,
 }
+
+export const Resource = {
+    COLOR: 'green',
+    MULTIPLIER: 0.5,
+    VALUE: 50,
+    INTERVAL: 500,
+    TEXT_COLOR: '#FFFFFF',
+} 

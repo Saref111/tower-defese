@@ -14,7 +14,23 @@ export default class Mouse {
         
         this.canvasElement.addEventListener('mousemove', (e) => this.handleMove(e))
         this.canvasElement.addEventListener('mouseleave', (e) => this.reset(e))
-        this.canvasElement.addEventListener('click', (e) => this.game.addDefender(this.currentCell))
+        this.canvasElement.addEventListener('click', (e) => this.handleClick(e))
+    }
+
+    handleClick(e) {
+        const clickedRecourses = this.game.resources.reduce(( acc, resource) => {
+            if (this.hover(resource)) {
+                acc.push(resource)
+            }
+            return acc
+        }, [])
+
+        if (!clickedRecourses.length) {
+            this.game.addDefender(this.currentCell)
+            return
+        }
+
+        clickedRecourses.forEach((resource) => this.game.removeResource(resource))
     }
     
     handleMove(e) {
@@ -37,5 +53,10 @@ export default class Mouse {
         this.x = undefined
         this.y = undefined
         this.currentCell = undefined
+    }
+
+    hover(object) {
+        return this.x > object.x && this.x < object.x + object.width && 
+            this.y > object.y && this.y < object.y + object.height
     }
 } 

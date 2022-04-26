@@ -33,7 +33,7 @@ export default class Board {
         const { mouse } = this.game
 
         this.cells.forEach((cell) => {
-            if (cell.contains(mouse)) {
+            if (mouse.hover(cell)) {
                 cell.draw(this.game.ctx)
             }
         })
@@ -46,6 +46,7 @@ export default class Board {
         this.game.ctx.fillStyle = ControlBar.TEXT_COLOR
         this.game.ctx.font = ControlBar.TEXT_LINE_HEIGHT + "px Arial"
         this.game.ctx.fillText(' Money: ' + Math.floor(this.game.money), 0, ControlBar.TEXT_LINE_HEIGHT)
+        this.game.ctx.fillText(' Scores: ' + Math.floor(this.game.scores), 0, ControlBar.TEXT_LINE_HEIGHT * 2)
 
         if (this.game.isOver) {
             this.drawGameOver()
