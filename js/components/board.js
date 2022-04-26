@@ -32,7 +32,6 @@ export default class Board {
     draw() {
         const { mouse } = this.game
 
-        this.drawControlBar()
         this.cells.forEach((cell) => {
             if (cell.contains(mouse)) {
                 cell.draw(this.game.ctx)

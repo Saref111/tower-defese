@@ -45,3 +45,11 @@ export const Enemy = {
     MIN_INTERVAL: 120,
     INTERVAL_DECREMENT: 100,
 }
+
+export const Projectile = {
+    COLOR: '#0095DD',
+    WIDTH: Cell.SIZE / 5,
+    HEIGHT: Cell.SIZE / 5,
+    SPEED: 5,
+    DAMAGE: 20,
+}

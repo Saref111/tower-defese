@@ -7,6 +7,8 @@ import {
     START_MONEY,
     Defender as DefenderEnum, 
     Enemy as EnemyEnum,
+    Canvas as CanvasEnum,
+    Cell as CellEnum,
 } from "../constants.js"
 
 export default class Game {
@@ -62,9 +64,9 @@ export default class Game {
     }
     
     handleEnemies(delta) {
-        this.enemies.forEach((enemy) => {
+        this.enemies.forEach((enemy, i) => {
             if (enemy.health < 0) {
-                this.enemies.splice(this.enemies.indexOf(enemy), 1)
+                this.enemies.splice(i, 1)
             } else {
                 enemy.update(delta)
                 if (enemy.x <= 0) {
@@ -98,26 +100,37 @@ export default class Game {
     }
 
     handleDefenders(delta) {
-        this.defenders.forEach((defender) => {
+        this.defenders.forEach((defender, i) => {
             if (defender.health < 0) {
-                this.defenders.splice(this.defenders.indexOf(defender), 1)
+                this.defenders.splice(i, 1)
             } else {
                 defender.update(delta)
             }
         })
     }
 
+    handleProjectile() {
+        this.projectiles.forEach((projectile, i) => {
+            if (projectile.x > CanvasEnum.WIDTH - CellEnum.SIZE) {
+                this.projectiles.splice(i, 1)
+            } else {
+                projectile.update()
+            }
+        })
+    }
+
     draw(delta) {
         this.clear()
-
-        // this.projectiles.forEach(projectile => projectile.draw())
+        
+        this.board.draw()
+        this.projectiles.forEach((projectile) => projectile.draw(this.ctx))
         this.defenders.forEach((defender) => defender.draw(this.ctx))
         this.enemies.forEach((enemy) => {
             enemy.draw(this.ctx)
-            
         })
+
+        this.board.drawControlBar(this.ctx)
         // this.resources.forEach(resource => resource.draw())
-        this.board.draw()
     }
     
     clear() {

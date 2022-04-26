@@ -7,7 +7,6 @@ export default class Defender {
         this.height = Cell.SIZE
         this.shooting = false
         this.health = DefenderEnum.HEALTH
-        this.projectiles = []
         this.timer = 0
     }
 
