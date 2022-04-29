@@ -1,4 +1,4 @@
-import { Cell, Projectile as ProjectileEnum } from "../constants.js"
+import { Cell, Projectile as ProjectileEnum, FPS } from "../constants.js"
 
 export default class Projectile {
     constructor(x, y) {
@@ -14,11 +14,9 @@ export default class Projectile {
 
     update(delta) {
         this.x += this.speed
-        
     }
 
-    draw(ctx) {
+    draw(ctx) {        
         ctx.drawImage(this.image, this.x, this.y + (Cell.SIZE / 2 - 10), this.width, this.height)
-
     }
 }

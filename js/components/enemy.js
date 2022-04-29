@@ -26,6 +26,7 @@ export default class Enemy {
         this.frameWidth = 0  
         this.frameTimer = 0
         this.frameInterval = 1000 / FPS
+        this.damage = EnemyEnum.DAMAGE
     }
 
     toggleFrame() {
@@ -52,7 +53,7 @@ export default class Enemy {
     update(delta) {
         this.x -= this.movement
 
-        if (this.frameTimer > this.frameInterval / this.speed) {
+        if (this.frameTimer > this.frameInterval / (this.movement === 0 ? EnemyEnum.MIN_SPEED : this.speed)) {
             this.frameTimer = 0
             this.toggleFrame()
         } else {

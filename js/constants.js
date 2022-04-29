@@ -30,11 +30,23 @@ export const Defender = {
     TEXT_COLOR: 'orange',
     TEXT_LINE_HEIGHT: 20,
     COST: 100,
-    DAMAGE: 0.3,
-    IMG_SRC: 'assets/archer.png',
-    MAX_FRAME_X: 21,
+    DAMAGE: {
+        archer: 0.3,
+        swordman: 2
+    },
+    IMG_SRC: {
+        archer: 'assets/archer.png',
+        swordman: 'assets/swordman.png',
+    },
+    MAX_FRAME_X: {
+        archer: 21,
+        swordman: 9,
+    },
     SHOOT_SPRITE_POSITION: 8,
-    SPRITE_WIDTH: 2199,
+    SPRITE_WIDTH: {
+        archer: 2199,
+        swordman: 1165,
+    },
 }
 
 export const Enemy = {

@@ -2,25 +2,28 @@ import { Cell, Defender as DefenderEnum, FPS } from "../constants.js"
 import { getRandomNumber } from "../utils.js"
 import Projectile from "./projectile.js"
 export default class Defender {
-    constructor(x, y) {
+    constructor(x, y, type = 'archer') {
+        this.type = type
         this.x = x
         this.y = y
         this.width = Cell.SIZE
         this.height = Cell.SIZE
         this.shooting = false
         this.shootingNow = false
+        this.stab = false
         this.health = DefenderEnum.HEALTH
         this.shootingDelay = DefenderEnum.SHOOTING_DELAY
         this.timer = 0
         this.image = new Image()
-        this.image.src = DefenderEnum.IMG_SRC
+        this.image.src = DefenderEnum.IMG_SRC[type]
         this.frameX = 0
         this.frameY = 0
         this.frameTimer = 0
         this.frameInterval = 1000 / FPS
-        this.maxFrameX = DefenderEnum.MAX_FRAME_X
-        this.frameWidth = DefenderEnum.SPRITE_WIDTH / (this.maxFrameX + 1)
+        this.maxFrameX = DefenderEnum.MAX_FRAME_X[type]
+        this.frameWidth = DefenderEnum.SPRITE_WIDTH[type] / (this.maxFrameX + 1)
         this.shootSpritePosition = DefenderEnum.SHOOT_SPRITE_POSITION
+        this.damage =  DefenderEnum.DAMAGE[type]
     }
 
     isShootingNow() {
@@ -53,10 +56,14 @@ export default class Defender {
         if (this.shooting) {
             this.countTimer(delta)
             
-            if (this.shootingNow) {
+            if (this.shootingNow && this.type === 'archer') {
                 projectiles.push(new Projectile(this.x, this.y))
                 this.toggleFrame()
             }
+
+        }
+        if (this.stab && this.type === 'swordman') {
+            this.countTimer(delta)
         }
     }
 

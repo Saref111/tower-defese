@@ -31,6 +31,7 @@ export default class Game {
         this.frameCount = 0
         this.enemyInterval = EnemyEnum.INTERVAL
         this.isOver = false
+        this.defenderType = 'swordman'
     }
 
     addMessage(source) {
@@ -64,7 +65,7 @@ export default class Game {
             isEmpty &&
             this.money >= DefenderEnum.COST  
         ) {
-            this.defenders.push(new Defender(cell.x, cell.y))
+            this.defenders.push(new Defender(cell.x, cell.y, this.defenderType))
             this.money -= DefenderEnum.COST
         } else if (!isEmpty) {
             this.addMessage({
@@ -147,12 +148,17 @@ export default class Game {
 
             this.defenders.forEach((defender) => {
                 if (this.checkCollision(enemy, defender)) {
+                    defender.stab = true
                     enemy.movement = 0
-                    defender.health -= EnemyEnum.DAMAGE
-                    enemy.health -= DefenderEnum.DAMAGE
+                    defender.health -= enemy.damage
+                    enemy.health -= defender.damage
                     
                     if (defender.health < 1) {
                         enemy.movement = enemy.speed
+                    }
+                    
+                    if (enemy.health < 1) {
+                        defender.stab = false
                     }
                 }
             })
@@ -170,7 +176,11 @@ export default class Game {
                         isEnemyOnLine = true
                     }
                 })
-                defender.shooting = isEnemyOnLine
+
+                if (defender.type === 'archer') {
+                    defender.shooting = isEnemyOnLine
+                }
+
                 defender.update(delta, this.projectiles)
             }
         })
