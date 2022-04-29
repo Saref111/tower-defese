@@ -30,7 +30,11 @@ export const Defender = {
     TEXT_COLOR: 'gold',
     TEXT_LINE_HEIGHT: 20,
     COST: 100,
-    DAMAGE: 0.3
+    DAMAGE: 0.3,
+    IMG_SRC: 'assets/archer.png',
+    MAX_FRAME_X: 21,
+    SHOOT_SPRITE_POSITION: 8,
+    SPRITE_WIDTH: 2199,
 }
 
 export const Enemy = {

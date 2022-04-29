@@ -109,7 +109,7 @@ export default class Game {
     
     handleFloatingMessages(delta) {
         this.floatingMessages.forEach((message, i) => {
-            message.update(delta)
+        message.update(delta)
             if (message.isOver) {
                 this.floatingMessages.splice(i, 1)
             }
