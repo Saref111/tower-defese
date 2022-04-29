@@ -31,6 +31,7 @@ export default class Game {
         this.frameCount = 0
         this.enemyInterval = EnemyEnum.INTERVAL
         this.isOver = false
+        this.isWin = false
         this.defenderType = 'swordman'
     }
 

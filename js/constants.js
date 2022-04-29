@@ -84,3 +84,9 @@ export const Resource = {
     INTERVAL: 500,
     TEXT_COLOR: 'white',
 } 
+
+export const ButtonStateColors = {
+    'normal': 'rgba(0, 0, 255, 0.8)',
+    'hover': 'rgba(0, 0, 255, 0.5)',
+    'click': 'rgba(0, 0, 255, 1)',
+}

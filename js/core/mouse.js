@@ -16,8 +16,12 @@ export default class Mouse {
         this.canvasElement.addEventListener('mouseleave', (e) => this.reset(e))
         this.canvasElement.addEventListener('click', (e) => this.handleClick(e))
     }
-
+    
     handleClick(e) {
+        if (this.hover(this.game.board.controlBar)) {
+            this.handleButtons('click')
+            return
+        }
         const clickedRecourses = this.game.resources.reduce(( acc, resource) => {
             if (this.hover(resource)) {
                 acc.push(resource)
@@ -31,13 +35,30 @@ export default class Mouse {
         }
 
         clickedRecourses.forEach((resource) => this.game.removeResource(resource))
+
     }
+
+    handleButtons(event) {
+        const { swordmanButton, archerButton } = this.game.board
+        const b = [swordmanButton, archerButton]
+        b.forEach((button) => {
+            if (this.hover(button) && event === 'click') {
+                this.game.defenderType = button.value
+            }
+            if (this.hover(button)) {
+                button.state = event
+            } else {
+                button.state = 'normal'
+            }
+        })
+    }   
     
     handleMove(e) {
         this.x = e.clientX - this.canvasPosition.x
         this.y = e.clientY - this.canvasPosition.y
         
         this.setCurrentCell()
+        this.handleButtons('hover')
     }
     
     

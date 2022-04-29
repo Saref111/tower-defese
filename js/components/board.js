@@ -1,4 +1,4 @@
-import { Canvas, Cell as CellEnum, ControlBar } from "../constants.js"
+import { ButtonStateColors, Canvas, Cell as CellEnum, ControlBar } from "../constants.js"
 import { getRandomNumber } from "../utils.js"
 import Cell from "./cell.js"
 
@@ -6,12 +6,41 @@ export default class Board {
     constructor(game) {
         this.game = game
         this.controlBar = {
+            x: 0,
+            y: 0,
             height: ControlBar.HEIGHT,
             width: ControlBar.WIDTH,
             color: ControlBar.COLOR,
         }
+        this.swordmanButtonImage = new Image()
+        this.swordmanButtonImage.src = 'assets/swordman.png'
+        this.archerButtonImage = new Image()
+        this.archerButtonImage.src = 'assets/archer.png'
+        // this.buttonAlfa = 0.5
+
         this.cells = []
         this.createGrid()
+
+        this.swordmanButton = {
+            x: ControlBar.WIDTH - CellEnum.SIZE + CellEnum.GAP, 
+            y: 0 + CellEnum.GAP, 
+            width: CellEnum.SIZE - CellEnum.GAP * 2,
+            height: ControlBar.HEIGHT - CellEnum.GAP * 2, 
+            image: this.swordmanButtonImage, 
+            color: `rgba(0, 0, 255, ${this.buttonAlfa})`,
+            state: 'normal',
+            value: 'swordman',
+        }
+        this.archerButton = {
+            x: ControlBar.WIDTH - (CellEnum.SIZE * 2) + CellEnum.GAP, 
+            y: 0 + CellEnum.GAP, 
+            width: CellEnum.SIZE - CellEnum.GAP * 2,
+            height: ControlBar.HEIGHT - CellEnum.GAP * 2, 
+            image: this.archerButtonImage, 
+            color: `rgba(0, 0, 255, ${this.buttonAlfa})`,
+            state: 'normal',
+            value: 'archer',
+        }
 
     }
 
@@ -26,8 +55,6 @@ export default class Board {
             }
         }
     }
-
-    update(delta) {}
 
     draw() {
         const { mouse } = this.game
@@ -51,6 +78,30 @@ export default class Board {
         if (this.game.isOver) {
             this.drawGameOver()
         }
+
+        this.drawButton(this.swordmanButton)
+        this.drawButton(this.archerButton)
+    }
+
+    drawButton({x, y, width, height, image, state, value}) {
+        this.game.ctx.fillStyle = ButtonStateColors[state]
+
+        if (this.game.defenderType === value) {
+            this.game.ctx.fillStyle = `red`
+        }
+
+        this.game.ctx.fillRect(x, y, width, height)
+        this.game.ctx.drawImage(
+            image,
+            0,
+            0,
+            100,
+            100,
+            x,
+            y,
+            width,
+            height
+        )
     }
     
     drawGameOver() {
