@@ -55,6 +55,7 @@ export default class Defender {
             
             if (this.shootingNow) {
                 projectiles.push(new Projectile(this.x, this.y))
+                this.toggleFrame()
             }
         }
     }

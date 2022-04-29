@@ -4,7 +4,7 @@ import { getRandomNumber } from "../utils.js"
 export default class Resource {
     constructor() {
         this.x = getRandomNumber(0, Canvas.WIDTH - Cell.SIZE)
-        this.y = getRandomNumber(0, Canvas.HEIGHT / Cell.SIZE) + Cell.SIZE
+        this.y = getRandomNumber(0, Canvas.HEIGHT) + Cell.SIZE
         this.width = Cell.SIZE * ResourceEnum.MULTIPLIER
         this.height = Cell.SIZE * ResourceEnum.MULTIPLIER
         this.value = ResourceEnum.VALUE

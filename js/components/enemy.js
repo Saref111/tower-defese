@@ -17,9 +17,13 @@ export default class Enemy {
         this.frameY = 0
         this.frameHeight = Cell.SIZE
         this.frameCount = EnemyEnum.WALK_SPRITE_COUNT
+        this.image = null
+        this.imageAttack = new Image()
         this.imageWalk = new Image()
+        this.imageAttack.src = EnemyEnum.IMG_SRC_ATTACK
         this.imageWalk.src = EnemyEnum.IMG_SRC_WALK
-        this.frameWidth = EnemyEnum.WALK_SPRITE_WIDTH / this.frameCount  
+        this.frameWidth = 0  
+        this.frameWidth = 0  
         this.frameTimer = 0
         this.frameInterval = 1000 / FPS
     }
@@ -28,6 +32,20 @@ export default class Enemy {
         this.frameX += 1
         if (this.frameX >= this.frameCount) {
             this.frameX = 0
+        }
+    }
+
+    setSprite() {
+        if (this.movement > 0) {
+            this.image = this.imageWalk
+            this.frameCount = EnemyEnum.WALK_SPRITE_COUNT
+            this.frameWidth = EnemyEnum.WALK_SPRITE_WIDTH / this.frameCount
+            this.frameY = 0
+        } else {
+            this.image = this.imageAttack
+            this.frameCount = EnemyEnum.ATTACK_SPRITE_COUNT
+            this.frameWidth = EnemyEnum.ATTACK_SPRITE_WIDTH / this.frameCount
+            this.frameY = 0
         }
     }
 
@@ -43,9 +61,9 @@ export default class Enemy {
     }
 
     draw(ctx) {
-        console.log(this.frameX);
+        this.setSprite()
         ctx.drawImage(
-            this.imageWalk,
+            this.image,
             this.frameX * this.frameWidth,
             this.frameY,
             this.frameWidth,

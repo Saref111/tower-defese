@@ -49,8 +49,11 @@ export const Enemy = {
     MIN_INTERVAL: 120,
     INTERVAL_DECREMENT: 100,
     IMG_SRC_WALK: 'assets/scorpion_walk.gif',
+    IMG_SRC_ATTACK: 'assets/scorpion_stab.gif',
     WALK_SPRITE_COUNT: 4,
+    ATTACK_SPRITE_COUNT: 3,
     WALK_SPRITE_WIDTH: 533,
+    ATTACK_SPRITE_WIDTH: 400,
 }
 
 export const Projectile = {
