@@ -8,6 +8,8 @@ export default class Projectile {
         this.height = ProjectileEnum.HEIGHT
         this.speed = ProjectileEnum.SPEED
         this.damage = ProjectileEnum.DAMAGE
+        this.image = new Image()
+        this.image.src = ProjectileEnum.IMG_SRC
     }
 
     update(delta) {
@@ -16,9 +18,7 @@ export default class Projectile {
     }
 
     draw(ctx) {
-        ctx.fillStyle = ProjectileEnum.COLOR    
-        ctx.beginPath()
-        ctx.arc(this.x + Cell.SIZE / 2, this.y + Cell.SIZE / 2, this.width, 0, Math.PI * 2)
-        ctx.fill()
+        ctx.drawImage(this.image, this.x, this.y + (Cell.SIZE / 2 - 10), this.width, this.height)
+
     }
 }

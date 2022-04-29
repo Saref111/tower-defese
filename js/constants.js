@@ -27,7 +27,7 @@ export const Defender = {
     SHOOTING_DELAY: 100,
     HEALTH: 100,
     COLOR: 'blue',
-    TEXT_COLOR: 'gold',
+    TEXT_COLOR: 'orange',
     TEXT_LINE_HEIGHT: 20,
     COST: 100,
     DAMAGE: 0.3,
@@ -58,10 +58,11 @@ export const Enemy = {
 
 export const Projectile = {
     COLOR: '#0095DD',
-    WIDTH: Cell.SIZE / 5,
-    HEIGHT: Cell.SIZE / 5,
+    WIDTH: 60,
+    HEIGHT: 10,
     SPEED: 5,
     DAMAGE: 20,
+    IMG_SRC: 'assets/arrow.png',
 }
 
 export const Resource = {

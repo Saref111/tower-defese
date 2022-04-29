@@ -76,6 +76,6 @@ export default class Enemy {
 
         ctx.fillStyle = EnemyEnum.TEXT_COLOR
         ctx.font = EnemyEnum.TEXT_LINE_HEIGHT + "px Arial"
-        ctx.fillText(Math.floor(this.health), this.x, this.y + EnemyEnum.TEXT_LINE_HEIGHT)
+        ctx.fillText(Math.floor(this.health), this.x, this.y + EnemyEnum.TEXT_LINE_HEIGHT * 2)
     }
 }
