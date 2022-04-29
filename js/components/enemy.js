@@ -1,4 +1,4 @@
-import { Canvas, Cell, Enemy as EnemyEnum } from "../constants.js";
+import { Canvas, Cell, Enemy as EnemyEnum, FPS } from "../constants.js";
 import { getRandomNumber } from "../utils.js";
 
 export default class Enemy {
@@ -13,15 +13,48 @@ export default class Enemy {
         this.maxHealth = this.health
         this.color = EnemyEnum.COLOR
         this.value = this.maxHealth / 2
+        this.frameX = 0
+        this.frameY = 0
+        this.frameHeight = Cell.SIZE
+        this.frameCount = EnemyEnum.WALK_SPRITE_COUNT
+        this.imageWalk = new Image()
+        this.imageWalk.src = EnemyEnum.IMG_SRC_WALK
+        this.frameWidth = EnemyEnum.WALK_SPRITE_WIDTH / this.frameCount  
+        this.frameTimer = 0
+        this.frameInterval = 1000 / FPS
+    }
+
+    toggleFrame() {
+        this.frameX += 1
+        if (this.frameX >= this.frameCount) {
+            this.frameX = 0
+        }
     }
 
     update(delta) {
         this.x -= this.movement
+
+        if (this.frameTimer > this.frameInterval / this.speed) {
+            this.frameTimer = 0
+            this.toggleFrame()
+        } else {
+            this.frameTimer += delta
+        }
     }
 
     draw(ctx) {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        console.log(this.frameX);
+        ctx.drawImage(
+            this.imageWalk,
+            this.frameX * this.frameWidth,
+            this.frameY,
+            this.frameWidth,
+            this.frameHeight,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        )
 
         ctx.fillStyle = EnemyEnum.TEXT_COLOR
         ctx.font = EnemyEnum.TEXT_LINE_HEIGHT + "px Arial"

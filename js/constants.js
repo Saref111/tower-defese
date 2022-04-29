@@ -48,6 +48,9 @@ export const Enemy = {
     INTERVAL: 600,
     MIN_INTERVAL: 120,
     INTERVAL_DECREMENT: 100,
+    IMG_SRC_WALK: 'assets/scorpion_walk.gif',
+    WALK_SPRITE_COUNT: 4,
+    WALK_SPRITE_WIDTH: 533,
 }
 
 export const Projectile = {
