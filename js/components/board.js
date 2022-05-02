@@ -16,7 +16,14 @@ export default class Board {
         this.swordmanButtonImage.src = 'assets/swordman.png'
         this.archerButtonImage = new Image()
         this.archerButtonImage.src = 'assets/archer.png'
-        // this.buttonAlfa = 0.5
+        this.tree1Img = new Image()
+        this.tree2Img = new Image()
+        this.tree3Img = new Image()
+        this.tree1Img.src = 'assets/tree_44.png'
+        this.tree2Img.src = 'assets/tree_51.png'
+        this.tree3Img.src = 'assets/tree_54.png'
+        this.grassImg = new Image()
+        this.grassImg.src = 'assets/grass_template2.jpg'
 
         this.cells = []
         this.createGrid()
@@ -56,10 +63,39 @@ export default class Board {
         }
     }
 
+    drawBackground() {
+        this.game.ctx.drawImage(this.grassImg, 0, 0, Canvas.WIDTH, Canvas.HEIGHT)
+    }
+
+    getTreeImg(treeNumber) {
+        switch (treeNumber) {
+            case 1:
+                return this.tree1Img
+            case 2:
+                return this.tree2Img
+            case 3:
+                return this.tree3Img
+            default:
+                return this.tree1Img
+        }
+    }
+
+    drawTree(cell) {
+        const treeNumber = getRandomNumber(1, 3)
+        const treeImg = this.getTreeImg(treeNumber)
+    }
+    
+
     draw() {
         const { mouse } = this.game
 
-        this.cells.forEach((cell) => {
+        this.drawBackground()
+
+        this.cells.forEach((cell, i) => {
+            if (i % 9 === 0) {
+                this.drawTree(cell)
+            }
+
             if (mouse.hover(cell)) {
                 cell.draw(this.game.ctx)
             }
